@@ -6,10 +6,9 @@ export default function Users() {
   const [showForms, setForms] = useState(false);
 
   const [newHotel, setNewHotel] = useState({
-    // id: null,
     name: "",
     price: "",
-    img: [''],
+    img: [""],
     desc: "",
   });
   useEffect(() => {
@@ -33,24 +32,29 @@ export default function Users() {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updatedHotels = [...hotels, { ...newHotel, id: hotels.length + 1 }];
-    setHotels(updatedHotels);
-    addHotel(newHotel);
-    setNewHotel({
-      // id: null,
-      name: "",
-      price: "",
-      img: [''],
-      desc : "",
-    });
-    handleHideForm();
-  };
+  async function handelSave() {
+    try {
+      if (newHotel.id) {
+        await axios.put(
+          `http://localhost:5223/wandermate/Test/${newHotel.id}`,
+          newHotel
+        );
+      } else {
+        await axios.post("http://localhost:5223/wandermate/Test", newHotel);
+      }
+      resetForm();
+      fetchHotel();
+    } catch (error) {
+      console.error("Error saving hotel:", error);
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewHotel({ ...newHotel, [name]: value });
+    setNewHotel((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleImageChange = (index, value) => {
@@ -62,15 +66,25 @@ export default function Users() {
     }));
   };
 
-  //function that handel showforms
-  const handleShowForms = () => {
+  const handelEdit = (hotel) => {
+    setNewHotel(hotel);
     setForms(true);
   };
 
-  //function that handle hideform
-  const handleHideForm = () => {
-    setForms(false);
+  const handelAddHotel = () => {
+    resetForm();
+    setForms(true);
   };
+
+  function resetForm() {
+    setNewHotel({
+      name: "",
+      price: "",
+      img: [""],
+      desc: "",
+    });
+    setForms(false);
+  }
 
   return (
     <div>
@@ -111,10 +125,10 @@ export default function Users() {
         </tbody>
       </table>
       <button
-        onClick={showForms ? handleHideForm : handleShowForms}
+        onClick={handelAddHotel}
         className=" rounded-2xl px-4 mt-4 boreder-2 bg-blue-600 text-white"
       >
-        Add Hotel
+        Add New Hotel
       </button>
       {showForms && (
         <form
