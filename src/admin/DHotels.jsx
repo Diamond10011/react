@@ -16,19 +16,19 @@ export default function DHotels() {
   });
 
   const fetchHotel = async () => {
-    const response = await axios.get("http://localhost:5223/wandermate/Hotel");
+    const response = await axios.get("http://localhost:5223/api/hotels");
     setHotels(response.data);
   };
   const addHotel = async (hotels) => {
     try {
-      await axios.post("http://localhost:5223/wandermate/Hotel", hotels);
+      await axios.post("http://localhost:5223/api/hotels", hotels);
     } catch {
       console.error(error);
     }
   };
   const editHotel = async (id, hotels) => {
     try {
-      await axios.put(`http://localhost:5223/wandermate/Hotel/${id}`, hotels);
+      await axios.put(`http://localhost:5223/api/hotels/${id}`, hotels);
     } catch (error) {
       console.error(error);
     }

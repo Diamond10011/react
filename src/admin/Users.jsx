@@ -32,7 +32,7 @@ export default function Users() {
     }
   }
 
-  async function handelSave() {
+  async function handleSubmit() {
     try {
       if (newHotel.id) {
         await axios.put(
@@ -60,7 +60,7 @@ export default function Users() {
   const handleImageChange = (index, value) => {
     const newImages = [...newHotel.img];
     newImages[index] = value;
-    setFormData((prevData) => ({
+    setNewHotel((prevData) => ({
       ...prevData,
       img: newImages,
     }));
@@ -169,17 +169,32 @@ export default function Users() {
             onChange={handleInputChange}
             placeholder="Price"
           />
-
-          <label htmlFor="img" className=" block">
-            Image
-          </label>
-          <input
-            className=" border-2 rounded w-full h-[43px]"
-            type="text"
-            name="img"
-            value={newHotel.img}
-            onChange={handleInputChange}
-          />
+          {newHotel.img.map((imgs, index) => (
+            <div>
+              <label className="block">
+                Image {index + 1}
+              </label>
+              <input
+                className=" border-2 p-2 w-full rounded "
+                type="text"
+                name={`img${index + 1}`}
+                value={imgs}
+                onChange={(e) => handleImageChange(index, e.target.value)}
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            className=" rounded-2xl px-4 mt-4 boreder-2 bg-blue-600 text-white"
+            onClick={() =>
+              setNewHotel((prevData) => ({
+                ...prevData,
+                img: [...prevData.img, ""],
+              }))
+            }
+          >
+            Add Another Image
+          </button>
 
           <label htmlFor="desc" className=" block">
             Description

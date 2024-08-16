@@ -1,41 +1,32 @@
-
-import React from 'react'
-
-export default function Destination() {
-  return (
-    <div>destination</div>
-  )
-}
-/* import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "./nav";
 import Footer from "./footer";
+import axios from "axios";
 
-export default function Destination() {
-  const [things, setthings] = useState([]);
+export default function Home() {
+  const [hotels, setHotels] = useState([]);
   const [dest, setdest] = useState([]);
   const [pac, setPac] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const destResponse = await fetch(
-          "http://localhost:3000/topDestinations"
+        const destResponse = await axios.get(
+          "http://localhost:5223/api/hotels" // top destination
         );
-        const thingsResponse = await fetch("http://localhost:3000/thingsToDo");
-        const pacResponse = await fetch("http://localhost:3000/travelPackages");
+        const hotelResponse = await axios.get(
+          "http://localhost:5223/api/hotels"
+        );
+        const pacResponse = await axios.get("http://localhost:5223/api/hotels");
 
-        if (!thingsResponse.ok || !destResponse.ok) {
+        if (!hotelResponse.ok || !destResponse.ok) {
           throw new Error("Network Problem");
         }
 
-        const thingsData = await thingsResponse.json();
-        setthings(thingsData);
+        setHotels(hotelResponse.data);
 
-        const destData = await destResponse.json();
-        const pacData = await pacResponse.json();
-
-        setdest(destData);
-        setPac(pacData);
+        setdest(destResponse.data);
+        setPac(pacResponse.data);
       } catch (error) {
         console.error(error);
       }
@@ -47,12 +38,23 @@ export default function Destination() {
     <>
       <div className=" m-5 px-6">
         <Nav />
-        <div className=" h-he mt-4 ">
-          <img
-            className=" h-he w-full rounded-md object-cover object-center"
-            src="src/assets/solukhumbuXmt.jpg"
-            alt=""
-          />
+        <div className=" h-he mt-4  bg-img bg-cover bg-center rounded-md">
+          <div className=" w-full h-full ">
+            <div className="flex justify-center items-center h-full">
+              <input
+                className=" w-1/3 h-11 pl-3 bg-none rounded-md"
+                type="search"
+                name="search"
+                id=""
+                placeholder="Search your place"
+              />
+              <img
+                className=" w-9 relative z-10 right-10 cursor-pointer"
+                src="src\assets\search.webp"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
 
         <div className=" m-6 ">
@@ -84,11 +86,11 @@ export default function Destination() {
               className=" w-8 h-8 rounded-full"
             />
             <ul className=" font-bold ml-2 pt-1">
-              <li>Things To Do</li>
+              <li>Top Hotels</li>
             </ul>
           </div>
           <div className="grid grid-cols-4 gap-8 mt-2">
-            {things.map((hotel) => (
+            {hotels.slice(0, 4).map((hotel) => (
               <div key={hotel.id}>
                 <img
                   src={hotel.img}
@@ -134,4 +136,3 @@ export default function Destination() {
     </>
   );
 }
- */

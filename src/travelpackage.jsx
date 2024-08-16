@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from 'react'
+
+export default function Travelpackage() {
+  return (
+    <div>travelpackage</div>
+  )
+}
+/* import React, { useEffect, useState } from "react";
 import Nav from "./nav";
 import Footer from "./footer";
 
@@ -82,3 +89,4 @@ export default function Travelpackage() {
      </div>
    );
 }
+ */

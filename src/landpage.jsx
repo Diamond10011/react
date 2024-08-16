@@ -1,143 +1,104 @@
-import React, { useState, useEffect } from "react";
-import Nav from "./nav";
-import Footer from "./footer";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import rt from "../src/assets/headerImg2.jpg";
+import Signin from "./Signin";
+import Signup from './Signup'
 
 export default function Landing() {
-  const [hotels, setHotels] = useState([]);
-  const [dest, setdest] = useState([]);
-  const [pac, setPac] = useState([]);
+  
+  const [signin, setSignIn] = useState(false);
+  const [signup, setSignUp] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const destResponse = await fetch(
-          "http://localhost:5223/wandermate/Hotel" // top destination
-        );
-        const hotelResponse = await fetch(
-          "http://localhost:5223/wandermate/Hotel"
-        );
-        const pacResponse = await fetch(
-          "http://localhost:5223/wandermate/TravelPackages"
-        );
-
-        if (!hotelResponse.ok || !destResponse.ok) {
-          throw new Error("Network Problem");
-        }
-
-        const hotelData = await hotelResponse.json();
-        setHotels(hotelData);
-
-        const destData = await destResponse.json();
-        const pacData = await pacResponse.json();
-
-        setdest(destData);
-        setPac(pacData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const showsignin = (e) =>{
+    e.preventDefault();
+    setSignIn(true);
+    setSignUp(false);
+  }
+  const showsignup = (e) =>{
+    e.preventDefault();
+    setSignUp(true);
+    setSignIn(false);
+  }
+  const hidesignin = () => {
+    setSignIn(false);
+  }
+  const hidesignup = () => {
+    setSignUp(false);
+  }
+  
+  
   return (
-    <>
-      <div className=" m-5 px-6">
-        <Nav />
-        <div className=" h-he mt-4  bg-img bg-cover bg-center rounded-md">
-          <div className=" w-full h-full ">
-            <div className="flex justify-center items-center h-full">
-              <input
-                className=" w-1/3 h-11 pl-3 bg-none rounded-md"
-                type="search"
-                name="search"
-                id=""
-                placeholder="Search your place"
-              />
-              <img
-                className=" w-9 relative z-10 right-10 cursor-pointer"
-                src="src\assets\search.webp"
-                alt=""
-              />
-            </div>
+    <div className=" w-full h-screen bg-cover bg-center bg-backg ">
+      <div className=" bg-black bg-opacity-50 w-full h-full">
+        <img
+          className="w-64 h-56 absolute top-0 right-0 "
+          src={rt}
+          alt=""
+          style={{
+            clipPath: "polygon(0 0, 100% 0, 100% 70%, 65% 100%, 0% 35%)",
+          }}
+        />
+        <nav>
+          <div className=" flex justify-normal gap-80 item-center py-8 px-12 ">
+            <h1 className="text-orange-500 h-[30px] w-18 font-bold text-3xl cursor-pointer">
+              <Link to ="/home">EXPLORE.</Link>
+            </h1>
+            <ul className="flex ml-14 space-x-16 text-xl text-white">
+              <li>
+                <a href="#" onClick={showsignin}>
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={showsignin}>
+                  Tours
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={showsignin}>
+                  Sale
+                </a>
+              </li>
+              <li>
+                <a href="#" onClick={showsignin}>
+                  Contact
+                </a>
+              </li>
+            </ul>
           </div>
+        </nav>
+        <div className="w-full h-1/2 mt-10 flex flex-col items-center justify-center">
+          <h3 className="tracking-wide text-xl text-white">
+            The Country Of Himalayas
+          </h3>
+          <p className="text-8xl font-serif font-bold mt-10">
+            <a href="#" onClick={showsignin}>
+              <span className="text-orange-500">NEP</span>
+              <span className="text-white">AL</span>
+            </a>
+          </p>
         </div>
-
-        <div className=" m-6 ">
-          <div className=" flex">
-            <img
-              src="src\assets\bg.jpg"
-              alt=""
-              className=" w-8 h-8 rounded-full"
-            />
-            <ul className=" font-bold ml-2 pt-1">
-              <li>Top Destinations</li>
-            </ul>
-          </div>
-          <div className="grid grid-cols-4 gap-8 mt-2">
-            {dest.map((dest) => (
-              <div key={dest.id}>
-                <img src={dest.img} alt="" className="w-full h-52 rounded-md" />
-                <h3 className="text-xl backdrop-blur-sm relative z-10 bottom-9 text-white font-bold mt-2">
-                  {dest.name}
-                </h3>
-              </div>
-            ))}
-          </div>
-          <div className=" flex justify-between"></div>
-          <div className=" flex mt-4">
-            <img
-              src="src\assets\bg2.jpg"
-              alt=""
-              className=" w-8 h-8 rounded-full"
-            />
-            <ul className=" font-bold ml-2 pt-1">
-              <li>Top Hotels</li>
-            </ul>
-          </div>
-          <div className="grid grid-cols-4 gap-8 mt-2">
-            {hotels.slice(0, 4).map((hotel) => (
-              <div key={hotel.id}>
-                <img
-                  src={hotel.img}
-                  alt=""
-                  className="w-full h-52 rounded-md"
-                />
-                <h3 className="text-xl backdrop-blur-sm relative z-10 bottom-9 text-white font-bold mt-2">
-                  {hotel.name}
-                </h3>
-              </div>
-            ))}
-          </div>
-          <div className=""></div>
-          <div className=" flex mt-4">
-            <img
-              src="src\assets\bg5.jpg"
-              alt=""
-              className=" w-8 h-8 rounded-full"
-            />
-            <ul className=" font-bold ml-2 pt-1">
-              <li>Top Travel Packages</li>
-            </ul>
-          </div>
-          <div className="grid grid-cols-4 gap-8 mt-2">
-            {pac.map((hotel) => (
-              <div key={hotel.id}>
-                <img
-                  src={hotel.img}
-                  alt=""
-                  className="w-full h-52 rounded-md"
-                />
-                <h3 className="text-xl backdrop-blur-sm relative z-10 bottom-9 text-white font-bold mt-2">
-                  {hotel.name}
-                </h3>
-              </div>
-            ))}
-          </div>
-          <div className=""></div>
+        <div className=" text-white z-10 absolute left-20 bottom-[90px]">
+          <h1>
+            Visit Nepal. You will never regret it.
+            <br />
+            This is something incredible, fantastic,
+            <br />
+            mesmerizing and a lifetime experience.
+          </h1>
         </div>
+        <footer>
+          <div className=" relative -bottom-[150px] h-16 flex justify-end items-center pr-20 backdrop-blur">
+            <ul className=" flex space-x-4 text-white">
+              <li>Facebook</li>
+              <li>Twitter</li>
+              <li> Instagram</li>
+            </ul>
+          </div>
+        </footer>
       </div>
-
-      <Footer />
-    </>
+      {signin && <Signin onbClick={showsignup} onClick={hidesignin} />}
+      {signup && <Signup onbClick={showsignin} onClick={hidesignup} />}
+    </div>
   );
 }

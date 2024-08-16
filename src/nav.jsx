@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Nav() {
   return (
-    <>
+    <nav>
       <div className=" mt-10 font-sans flex justify-between ">
         <div>
           <h2 className=" text-blue-500 text-xl font-bold">
@@ -28,13 +28,13 @@ function Nav() {
         </ul>
 
         <div className=" flex gap-6">
-          <span className=" font-bold pt-1">Diamond123</span>
+          {/* <span className=" font-bold pt-1">Diamond123</span> */}
           <Link to="/profile">
             <img src={nezuko} className=" w-12 rounded-full relative -top-2" />
           </Link>
         </div>
       </div>
-    </>
+    </nav>
   );
 }
 export default Nav;

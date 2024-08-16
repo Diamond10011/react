@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export default function Sidebar() {
   return (
     <div className="bg-[#101226] text-white  pl-10  flex-col font-semibold text-lg justify-between w-[14rem] h-screen lg:flex ">
-      
       <div className="flex items-center mt-7 ">
         {/* <img className="w-8" src="#" alt="no" />  */}
         <h1 className=" text-2xl font-bold">Travel Dashboard</h1>
@@ -28,7 +27,7 @@ export default function Sidebar() {
           <li>Travel Packages</li>
         </Link>
         <Link
-          to=""
+          to="hotels"
           className="hover:text-blue-600 flex items-center  transition-all duration-200"
         >
           {/* <img className="w-8" src='#' alt="no"/> */}
